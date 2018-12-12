@@ -1,0 +1,221 @@
+stages:
+  - deploy
+
+image: registry.gitlab.com/redmic-project/docker/docker-deploy:latest
+
+services:
+  - docker:dind
+
+variables:
+  DOCKER_DRIVER: overlay2
+  STACK: confluent
+
+deploy-zk-1-supporting-branch-develop:
+  stage: deploy
+  variables:
+    SSH_REMOTE: ${DEV_SSH_REMOTE}
+    INSTANCE_ID: '1'
+    SERVICES_TO_CHECK: ${STACK}_${CI_PROJECT_NAME}-${INSTANCE_ID}
+    IMAGE_TAG: ${DEV_CONFLUENT_VERSION}
+    COMPOSE_FILE: docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.tmpl.yml:docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.dev.yml
+  script:
+    - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
+  environment:
+    name: dev
+  only:
+    - branches
+  except:
+    - master
+  when: manual
+
+deploy-zk-2-supporting-branch-develop:
+  stage: deploy
+  variables:
+    SSH_REMOTE: ${DEV_SSH_REMOTE}
+    INSTANCE_ID: '2'
+    SERVICES_TO_CHECK: ${STACK}_${CI_PROJECT_NAME}-${INSTANCE_ID}
+    IMAGE_TAG: ${DEV_CONFLUENT_VERSION}
+    COMPOSE_FILE: docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.tmpl.yml:docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.dev.yml
+  script:
+    - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
+  environment:
+    name: dev
+  only:
+    - branches
+  except:
+    - master
+  when: manual
+
+deploy-zk-3-supporting-branch-develop:
+  stage: deploy
+  variables:
+    SSH_REMOTE: ${DEV_SSH_REMOTE}
+    INSTANCE_ID: '3'
+    SERVICES_TO_CHECK: ${STACK}_${CI_PROJECT_NAME}-${INSTANCE_ID}
+    IMAGE_TAG: ${DEV_CONFLUENT_VERSION}
+    COMPOSE_FILE: docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.tmpl.yml:docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.dev.yml
+  script:
+    - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
+  environment:
+    name: dev
+  only:
+    - branches
+  except:
+    - master
+  when: manual
+
+deploy-zk-1-stable-branch-develop:
+  stage: deploy
+  variables:
+    SSH_REMOTE: ${DEV_SSH_REMOTE}
+    INSTANCE_ID: '1'
+    SERVICES_TO_CHECK: ${STACK}_${CI_PROJECT_NAME}-${INSTANCE_ID}
+    IMAGE_TAG: ${DEV_CONFLUENT_VERSION}
+    COMPOSE_FILE: docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.tmpl.yml:docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.dev.yml
+  script:
+    - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
+  environment:
+    name: dev
+  only:
+    - master
+  when: manual
+
+deploy-zk-2-stable-branch-develop:
+  stage: deploy
+  variables:
+    SSH_REMOTE: ${DEV_SSH_REMOTE}
+    INSTANCE_ID: '2'
+    SERVICES_TO_CHECK: ${STACK}_${CI_PROJECT_NAME}-${INSTANCE_ID}
+    IMAGE_TAG: ${DEV_CONFLUENT_VERSION}
+    COMPOSE_FILE: docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.tmpl.yml:docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.dev.yml
+  script:
+    - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
+  environment:
+    name: dev
+  only:
+    - master
+  when: manual
+
+deploy-zk-3-stable-branch-develop:
+  stage: deploy
+  variables:
+    SSH_REMOTE: ${DEV_SSH_REMOTE}
+    INSTANCE_ID: '3'
+    SERVICES_TO_CHECK: ${STACK}_${CI_PROJECT_NAME}-${INSTANCE_ID}
+    IMAGE_TAG: ${DEV_CONFLUENT_VERSION}
+    COMPOSE_FILE: docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.tmpl.yml:docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.dev.yml
+  script:
+    - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
+  environment:
+    name: dev
+  only:
+    - master
+  when: manual
+
+deploy-zk-1-supporting-branch-production:
+  stage: deploy
+  variables:
+    SSH_REMOTE: ${PRO_SSH_REMOTE}
+    INSTANCE_ID: '1'
+    SERVICES_TO_CHECK: ${STACK}_${CI_PROJECT_NAME}-${INSTANCE_ID}
+    IMAGE_TAG: ${PRO_CONFLUENT_VERSION}
+    COMPOSE_FILE: docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.tmpl.yml:docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.prod.yml
+    AWS_REGION: ${AWS_REGION}
+  script:
+    - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE} AWS_REGION=${AWS_REGION}
+  environment:
+    name: pro
+  only:
+    - branches
+  except:
+    - master
+  when: manual
+
+deploy-zk-2-supporting-branch-production:
+  stage: deploy
+  variables:
+    SSH_REMOTE: ${PRO_SSH_REMOTE}
+    INSTANCE_ID: '2'
+    SERVICES_TO_CHECK: ${STACK}_${CI_PROJECT_NAME}-${INSTANCE_ID}
+    IMAGE_TAG: ${PRO_CONFLUENT_VERSION}
+    COMPOSE_FILE: docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.tmpl.yml:docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.prod.yml
+    AWS_REGION: ${AWS_REGION}
+  script:
+    - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE} AWS_REGION=${AWS_REGION}
+  environment:
+    name: pro
+  only:
+    - branches
+  except:
+    - master
+  when: manual
+
+deploy-zk-3-supporting-branch-production:
+  stage: deploy
+  variables:
+    SSH_REMOTE: ${PRO_SSH_REMOTE}
+    INSTANCE_ID: '3'
+    SERVICES_TO_CHECK: ${STACK}_${CI_PROJECT_NAME}-${INSTANCE_ID}
+    IMAGE_TAG: ${PRO_CONFLUENT_VERSION}
+    COMPOSE_FILE: docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.tmpl.yml:docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.prod.yml
+    AWS_REGION: ${AWS_REGION}
+  script:
+    - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE} AWS_REGION=${AWS_REGION}
+  environment:
+    name: pro
+  only:
+    - branches
+  except:
+    - master
+  when: manual
+
+deploy-zk-1-stable-branch-production:
+  stage: deploy
+  variables:
+    SSH_REMOTE: ${PRO_SSH_REMOTE}
+    INSTANCE_ID: '1'
+    SERVICES_TO_CHECK: ${STACK}_${CI_PROJECT_NAME}-${INSTANCE_ID}
+    IMAGE_TAG: ${PRO_CONFLUENT_VERSION}
+    COMPOSE_FILE: docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.tmpl.yml:docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.prod.yml
+    AWS_REGION: ${AWS_REGION}
+  script:
+    - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE} AWS_REGION=${AWS_REGION}
+  environment:
+    name: pro
+  only:
+    - master
+  when: manual
+
+deploy-zk-2-stable-branch-production:
+  stage: deploy
+  variables:
+    SSH_REMOTE: ${PRO_SSH_REMOTE}
+    INSTANCE_ID: '2'
+    SERVICES_TO_CHECK: ${STACK}_${CI_PROJECT_NAME}-${INSTANCE_ID}
+    IMAGE_TAG: ${PRO_CONFLUENT_VERSION}
+    COMPOSE_FILE: docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.tmpl.yml:docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.prod.yml
+    AWS_REGION: ${AWS_REGION}
+  script:
+    - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE} AWS_REGION=${AWS_REGION}
+  environment:
+    name: pro
+  only:
+    - master
+  when: manual
+
+deploy-zk-3-stable-branch-production:
+  stage: deploy
+  variables:
+    SSH_REMOTE: ${PRO_SSH_REMOTE}
+    INSTANCE_ID: '3'
+    SERVICES_TO_CHECK: ${STACK}_${CI_PROJECT_NAME}-${INSTANCE_ID}
+    IMAGE_TAG: ${PRO_CONFLUENT_VERSION}
+    COMPOSE_FILE: docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.tmpl.yml:docker-compose.${CI_PROJECT_NAME}-${INSTANCE_ID}.prod.yml
+    AWS_REGION: ${AWS_REGION}
+  script:
+    - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE} AWS_REGION=${AWS_REGION}
+  environment:
+    name: pro
+  only:
+    - master
+  when: manual

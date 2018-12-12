@@ -1,0 +1,39 @@
+version: '3.5'
+
+services:
+  zookeeper-1:
+    environment:
+      - KAFKA_HEAP_OPTS=-Xmx256m -Xms256m
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+          - engine.labels.availability_zone == ${AWS_REGION}a
+      restart_policy:
+        delay: 30s
+        window: 2m
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          memory: 410M
+
+x-prod-default-volume:
+  &prod-default-volume
+  driver: "cloudstor:aws"
+  driver_opts:
+    backing: relocatable
+    size: 1
+    ebstype: gp2
+
+volumes:
+  zk-data-vol:
+    << : *prod-default-volume
+    name: ${ZK_DATA_VOL_NAME:-zk-1-data-vol}
+
+  zk-log-vol:
+    << : *prod-default-volume
+    name: ${ZK_LOG_VOL_NAME:-zk-1-log-vol}
