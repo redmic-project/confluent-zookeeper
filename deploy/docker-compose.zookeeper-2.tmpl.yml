@@ -53,7 +53,9 @@ volumes:
 
 configs:
   jmx-prometheus-javaagent:
+    name: ${JMX_PROMETHEUS_JAVA_AGENT_NAME:-jmx-prometheus-javaagent}
     file: ./config/jmx_prometheus_javaagent-0.3.1.jar
 
   jmx-prometheus-config:
+    name: ${JMX_PROMETHEUS_CONFIG_NAME:-jmx-prometheus-config}
     file: ./config/config.yaml
