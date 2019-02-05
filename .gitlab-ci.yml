@@ -1,7 +1,7 @@
 stages:
   - deploy
 
-image: registry.gitlab.com/redmic-project/docker/docker-deploy:latest
+image: registry.gitlab.com/redmic-project/docker/docker-deploy:${DOCKER_DEPLOY_IMAGE_TAG}
 
 services:
   - docker:dind
