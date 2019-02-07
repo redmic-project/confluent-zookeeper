@@ -1,7 +1,7 @@
 stages:
   - deploy
 
-image: registry.gitlab.com/redmic-project/docker/docker-deploy:latest
+image: registry.gitlab.com/redmic-project/docker/docker-deploy:${DOCKER_DEPLOY_IMAGE_TAG}
 
 services:
   - docker:dind
@@ -21,7 +21,7 @@ deploy-zk-1-supporting-branch-develop:
   script:
     - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
   environment:
-    name: dev
+    name: dev/${CI_PROJECT_NAME}-${INSTANCE_ID}
   only:
     - branches
   except:
@@ -39,7 +39,7 @@ deploy-zk-2-supporting-branch-develop:
   script:
     - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
   environment:
-    name: dev
+    name: dev/${CI_PROJECT_NAME}-${INSTANCE_ID}
   only:
     - branches
   except:
@@ -57,7 +57,7 @@ deploy-zk-3-supporting-branch-develop:
   script:
     - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
   environment:
-    name: dev
+    name: dev/${CI_PROJECT_NAME}-${INSTANCE_ID}
   only:
     - branches
   except:
@@ -75,7 +75,7 @@ deploy-zk-1-stable-branch-develop:
   script:
     - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
   environment:
-    name: dev
+    name: dev/${CI_PROJECT_NAME}-${INSTANCE_ID}
   only:
     - master
   when: manual
@@ -91,7 +91,7 @@ deploy-zk-2-stable-branch-develop:
   script:
     - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
   environment:
-    name: dev
+    name: dev/${CI_PROJECT_NAME}-${INSTANCE_ID}
   only:
     - master
   when: manual
@@ -107,7 +107,7 @@ deploy-zk-3-stable-branch-develop:
   script:
     - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
   environment:
-    name: dev
+    name: dev/${CI_PROJECT_NAME}-${INSTANCE_ID}
   only:
     - master
   when: manual
@@ -124,7 +124,7 @@ deploy-zk-1-supporting-branch-production:
   script:
     - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE} AWS_REGION=${AWS_REGION}
   environment:
-    name: pro
+    name: pro/${CI_PROJECT_NAME}-${INSTANCE_ID}
   only:
     - branches
   except:
@@ -143,7 +143,7 @@ deploy-zk-2-supporting-branch-production:
   script:
     - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE} AWS_REGION=${AWS_REGION}
   environment:
-    name: pro
+    name: pro/${CI_PROJECT_NAME}-${INSTANCE_ID}
   only:
     - branches
   except:
@@ -162,7 +162,7 @@ deploy-zk-3-supporting-branch-production:
   script:
     - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE} AWS_REGION=${AWS_REGION}
   environment:
-    name: pro
+    name: pro/${CI_PROJECT_NAME}-${INSTANCE_ID}
   only:
     - branches
   except:
@@ -181,7 +181,7 @@ deploy-zk-1-stable-branch-production:
   script:
     - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE} AWS_REGION=${AWS_REGION}
   environment:
-    name: pro
+    name: pro/${CI_PROJECT_NAME}-${INSTANCE_ID}
   only:
     - master
   when: manual
@@ -198,7 +198,7 @@ deploy-zk-2-stable-branch-production:
   script:
     - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE} AWS_REGION=${AWS_REGION}
   environment:
-    name: pro
+    name: pro/${CI_PROJECT_NAME}-${INSTANCE_ID}
   only:
     - master
   when: manual
@@ -215,7 +215,7 @@ deploy-zk-3-stable-branch-production:
   script:
     - deploy.sh IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE} AWS_REGION=${AWS_REGION}
   environment:
-    name: pro
+    name: pro/${CI_PROJECT_NAME}-${INSTANCE_ID}
   only:
     - master
   when: manual
