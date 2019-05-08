@@ -15,7 +15,7 @@ services:
 
 volumes:
   zk-data-vol:
-    name: ${ZK_DATA_VOL_NAME:-zk-{{.Task.Slot}}-data-vol}
+    name: ${ZK_DATA_VOL_NAME}
 
   zk-log-vol:
-    name: ${ZK_LOG_VOL_NAME:-zk-{{.Task.Slot}}-log-vol}
+    name: ${ZK_LOG_VOL_NAME}

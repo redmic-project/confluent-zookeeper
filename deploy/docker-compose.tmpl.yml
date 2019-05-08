@@ -58,7 +58,7 @@ networks:
 
 volumes:
   zk-secrets-vol:
-    name: ${ZK_SECRETS_VOL_NAME:-zk-{{.Task.Slot}}-secrets-vol}
+    name: ${ZK_SECRETS_VOL_NAME}
 
 configs:
   jmx-prometheus-javaagent:
