@@ -1,0 +1,21 @@
+version: '3.5'
+
+services:
+  zookeeper:
+    environment:
+      KAFKA_HEAP_OPTS: -Xmx128m -Xms128m
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.001'
+          memory: 205M
+
+volumes:
+  zk-data-vol:
+    name: ${ZK_DATA_VOL_NAME:-zk-{{.Task.Slot}}-data-vol}
+
+  zk-log-vol:
+    name: ${ZK_LOG_VOL_NAME:-zk-{{.Task.Slot}}-log-vol}
