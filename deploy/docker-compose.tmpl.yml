@@ -19,6 +19,8 @@ services:
       KAFKA_OPTS: -javaagent:/jmx_prometheus_javaagent.jar=${JMX_HTTP_PORT}:/config.yaml
     networks:
       kafka-net:
+        aliases:
+          - zk-{{.Task.Slot}}
       metric-net:
     configs:
       - source: jmx-prometheus-javaagent
