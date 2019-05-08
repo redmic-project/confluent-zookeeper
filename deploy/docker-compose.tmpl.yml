@@ -5,7 +5,7 @@ services:
     image: ${IMAGE_NAME:-confluentinc/cp-zookeeper}:${IMAGE_TAG:-latest}
     hostname: zk-{{.Task.Slot}}
     environment:
-      ZOOKEEPER_SERVER_ID: {{.Task.Slot}}
+      ZOOKEEPER_SERVER_ID: '{{.Task.Slot}}'
       ZOOKEEPER_CLIENT_PORT: ${ZK_PORT}
       KAFKA_JMX_PORT:
       ZOOKEEPER_TICK_TIME:
