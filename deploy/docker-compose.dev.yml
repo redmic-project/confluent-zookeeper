@@ -1,13 +1,10 @@
 version: '3.5'
 
 services:
-  zookeeper-2:
+  zookeeper:
     environment:
       KAFKA_HEAP_OPTS: -Xmx128m -Xms128m
     deploy:
-      placement:
-        constraints:
-          - node.hostname == ${ZK_2_PLACEMENT_CONSTRAINTS_NODE_HOSTNAME:-hostname}
       resources:
         limits:
           cpus: '${RESOURCES_LIMITS_CPUS:-0.5}'
@@ -18,7 +15,7 @@ services:
 
 volumes:
   zk-data-vol:
-    name: ${ZK_DATA_VOL_NAME:-zk-2-data-vol}
+    name: ${ZK_DATA_VOL_NAME}
 
   zk-log-vol:
-    name: ${ZK_LOG_VOL_NAME:-zk-2-log-vol}
+    name: ${ZK_LOG_VOL_NAME}

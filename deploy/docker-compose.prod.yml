@@ -1,14 +1,13 @@
 version: '3.5'
 
 services:
-  zookeeper-1:
+  zookeeper:
     environment:
       KAFKA_HEAP_OPTS: -Xmx256m -Xms256m
     deploy:
       placement:
         constraints:
           - node.role == worker
-          - engine.labels.availability_zone == ${AWS_REGION}a
       resources:
         limits:
           cpus: '${RESOURCES_LIMITS_CPUS:-0.5}'
@@ -28,8 +27,8 @@ x-prod-default-volume:
 volumes:
   zk-data-vol:
     << : *prod-default-volume
-    name: ${ZK_DATA_VOL_NAME:-zk-1-data-vol}
+    name: ${ZK_DATA_VOL_NAME}
 
   zk-log-vol:
     << : *prod-default-volume
-    name: ${ZK_LOG_VOL_NAME:-zk-1-log-vol}
+    name: ${ZK_LOG_VOL_NAME}

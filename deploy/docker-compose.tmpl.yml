@@ -1,12 +1,12 @@
 version: '3.5'
 
 services:
-  zookeeper-1:
-    image: ${IMAGE_NAME}:${IMAGE_TAG}
-    hostname: zk-1
+  zookeeper:
+    image: ${IMAGE_NAME:-confluentinc/cp-zookeeper}:${IMAGE_TAG:-latest}
+    hostname: zk-{{.Task.Slot}}
     environment:
-      ZOOKEEPER_SERVER_ID: 1
-      KAFKA_JMX_HOSTNAME: zk-1
+      ZOOKEEPER_SERVER_ID: '{{.Task.Slot}}'
+      KAFKA_JMX_HOSTNAME: zk-{{.Task.Slot}}
       KAFKA_OPTS: -javaagent:${JMX_PROMETHEUS_JAVAAGENT_PATH}=${JMX_HTTP_PORT}:${JMX_PROMETHEUS_CONFIG_PATH}
       ZOOKEEPER_CLIENT_PORT:
       KAFKA_JMX_PORT:
@@ -19,8 +19,6 @@ services:
       ZOOKEEPER_LOG4J_ROOT_LOGLEVEL:
     networks:
       kafka-net:
-        aliases:
-          - zk-1
       metric-net:
     configs:
       - source: jmx-prometheus-javaagent
@@ -58,7 +56,7 @@ networks:
 
 volumes:
   zk-secrets-vol:
-    name: ${ZK_SECRETS_VOL_NAME:-zk-1-secrets-vol}
+    name: ${ZK_SECRETS_VOL_NAME}
 
 configs:
   jmx-prometheus-javaagent:
