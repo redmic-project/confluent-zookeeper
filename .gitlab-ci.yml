@@ -9,6 +9,11 @@ stages:
 variables:
   PROJECT_PARENT_NAME: confluent
 
+.deploy:
+  variables:
+    STACK: ${PROJECT_PARENT_NAME}
+    DD_AWS_REGION: ${AWS_REGION}
+
 .deploy-development:
   environment:
     name: dev/${SERVICE_NAME}
