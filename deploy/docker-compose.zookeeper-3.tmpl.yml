@@ -32,10 +32,10 @@ services:
       - zk-log-vol:/var/lib/zookeeper/log
       - zk-secrets-vol:/etc/zookeeper/secrets
     healthcheck:
-      test: echo ruok | nc localhost ${ZK_PORT}
+      test: echo ruok | nc localhost ${ZOOKEEPER_CLIENT_PORT}
       interval: ${HEALTHCHECK_INTERVAL:-30s}
-      timeout: ${HEALTHCHECK_TIMEOUT:10s}
-      retries: ${HEALTHCHECK_RETRIES:10}
+      timeout: ${HEALTHCHECK_TIMEOUT:-10s}
+      retries: ${HEALTHCHECK_RETRIES:-10}
       start_period: ${HEALTHCHECK_START_PERIOD:-2m}
     deploy:
       mode: replicated
