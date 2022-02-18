@@ -3,31 +3,27 @@ version: '3.5'
 services:
   zookeeper-3:
     environment:
-      - KAFKA_HEAP_OPTS=-Xmx256m -Xms256m
+      KAFKA_HEAP_OPTS: -Xmx256m -Xms256m
     deploy:
-      mode: replicated
-      replicas: 1
       placement:
         constraints:
           - node.role == worker
           - engine.labels.availability_zone == ${AWS_REGION}c
-      restart_policy:
-        delay: 30s
-        window: 2m
       resources:
         limits:
-          cpus: '0.5'
-          memory: 512M
+          cpus: '${RESOURCES_LIMITS_CPUS:-0.5}'
+          memory: ${RESOURCES_LIMITS_MEMORY:-512M}
         reservations:
-          memory: 410M
+          cpus: '${RESOURCES_RESERVATIONS_CPUS:-0.001}'
+          memory: ${RESOURCES_RESERVATIONS_MEMORY:-410M}
 
 x-prod-default-volume:
   &prod-default-volume
-  driver: "cloudstor:aws"
+  driver: 'cloudstor:aws'
   driver_opts:
     backing: relocatable
-    size: 1
-    ebstype: gp2
+    size: ${ZK_DEFAULT_VOL_SIZE:-1}
+    ebstype: ${ZK_DEFAULT_VOL_EBS_TYPE:-gp2}
 
 volumes:
   zk-data-vol:
